@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "node src/server.js",
+    "start": "node src/mtg-info-grab.js",
     "dev": "nodemon src/server.js",
     "predeploy": "npm audit",
     "deploy": "git push heroku master"
@@ -20,6 +20,7 @@
     "helmet": "^3.23.3",
     "knex": "^0.21.2",
     "morgan": "^1.10.0",
+    "pg": "^8.3.0",
     "postgrator": "^3.2.0"
   },
   "devDependencies": {
