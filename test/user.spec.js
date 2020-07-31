@@ -1,6 +1,6 @@
 const knex = require('knex');
 
-const UsersService = require('../src/users/user-service'),
+const UsersService = require('../src/user/user-service'),
   helpers = require('./test-helpers');
 
 /**
