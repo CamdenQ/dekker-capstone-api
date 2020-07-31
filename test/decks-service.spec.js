@@ -22,7 +22,7 @@ const DecksService = require('../src/decks/decks-service'),
  *
  */
 
-describe.only('User decks service object', () => {
+describe('User decks service object', () => {
   let db;
 
   // We'll use this array as an example of mock data that represents
