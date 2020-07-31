@@ -1,7 +1,7 @@
 const knex = require('knex');
-const DekkerUsersService = require('../../src/dekker-users-service');
-const helmet = require('helmet');
-const helpers = require('../test-helpers');
+
+const UsersService = require('../src/users/user-service'),
+  helpers = require('./test-helpers');
 
 /**
  * GENERAL NOTE:
@@ -22,7 +22,7 @@ const helpers = require('../test-helpers');
  *
  */
 
-describe.only('Dekker users service object', () => {
+describe('Dekker users service object', () => {
   let db;
 
   // We'll use this array as an example of mock data that represents
@@ -50,7 +50,7 @@ describe.only('Dekker users service object', () => {
   describe('getAllUsers()', () => {
     context('with no data present', () => {
       it('returns an empty array', () => {
-        return DekkerUsersService.getAllUsers(db).then((users) =>
+        return UsersService.getAllUsers(db).then((users) =>
           expect(users).to.eql([])
         );
       });
@@ -64,7 +64,7 @@ describe.only('Dekker users service object', () => {
       );
 
       it('returns all test users', () => {
-        return DekkerUsersService.getAllUsers(db).then((users) =>
+        return UsersService.getAllUsers(db).then((users) =>
           expect(users).to.eql(testUsers)
         );
       });
@@ -76,7 +76,7 @@ describe.only('Dekker users service object', () => {
       // New deck to use as subject of our test
       const newUser = helpers.makeNewUser();
 
-      return DekkerUsersService.insertUser(db, newUser).then((actual) => {
+      return UsersService.insertUser(db, newUser).then((actual) => {
         expect(actual).to.eql(helpers.makeExpectedUser(newUser));
       });
     });
@@ -93,7 +93,7 @@ describe.only('Dekker users service object', () => {
       // using for all our promise chains. The second occurs if promise is
       // rejected. In the following test, we EXPECT the promise to be rejected
       // as the database should throw an error due to the NOT NULL constraint
-      return DekkerUsersService.insertUser(db, newUser).then(
+      return UsersService.insertUser(db, newUser).then(
         () => expect.fail('db should throw error'),
         (err) => expect(err.message).to.include('not-null')
       );
@@ -102,7 +102,7 @@ describe.only('Dekker users service object', () => {
 
   describe('getById()', () => {
     it('should return undefined', () => {
-      return DekkerUsersService.getById(db, 999).then(
+      return UsersService.getById(db, 999).then(
         (deck) => expect(deck).to.be.undefined
       );
     });
@@ -113,7 +113,7 @@ describe.only('Dekker users service object', () => {
       it('should return existing user', () => {
         const expectedUserId = 3;
         const expectedUser = testUsers.find((a) => a.id === expectedUserId);
-        return DekkerUsersService.getById(db, expectedUserId).then((actual) =>
+        return UsersService.getById(db, expectedUserId).then((actual) =>
           expect(actual).to.eql(expectedUser)
         );
       });
@@ -122,7 +122,7 @@ describe.only('Dekker users service object', () => {
 
   describe('deleteUser()', () => {
     it('should return 0 rows affected', () => {
-      return DekkerUsersService.deleteUser(db, 999).then((rowsAffected) =>
+      return UsersService.deleteUser(db, 999).then((rowsAffected) =>
         expect(rowsAffected).to.eq(0)
       );
     });
@@ -133,7 +133,7 @@ describe.only('Dekker users service object', () => {
       it('should return 1 row affected and record is removed from db', () => {
         const deletedDeckId = 1;
 
-        return DekkerUsersService.deleteUser(db, deletedDeckId)
+        return UsersService.deleteUser(db, deletedDeckId)
           .then((rowsAffected) => {
             expect(rowsAffected).to.eq(1);
             return db('dekker_users').select('*');
@@ -149,7 +149,7 @@ describe.only('Dekker users service object', () => {
 
   describe('updateUser()', () => {
     it('should return 0 rows affected', () => {
-      return DekkerUsersService.updateUser(db, 999, {
+      return UsersService.updateUser(db, 999, {
         password: 'newPassword',
       }).then((rowsAffected) => expect(rowsAffected).to.eq(0));
     });
@@ -163,7 +163,7 @@ describe.only('Dekker users service object', () => {
         // make copy of testUser in db, overwriting with newly updated field value
         const updatedUser = { ...testUser, password: 'newPassword' };
 
-        return DekkerUsersService.updateUser(db, updatedUserId, updatedUser)
+        return UsersService.updateUser(db, updatedUserId, updatedUser)
           .then((rowsAffected) => {
             expect(rowsAffected).to.eq(1);
             return db('dekker_users')
