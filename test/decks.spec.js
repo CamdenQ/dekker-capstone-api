@@ -1,8 +1,7 @@
 const knex = require('knex');
 
-const UserDecksService = require('../src/decks/user-decks-service'),
+const DecksService = require('../src/decks/decks-service'),
   helpers = require('./test-helpers');
-const { Test } = require('mocha');
 
 /**
  * GENERAL NOTE:
@@ -23,7 +22,7 @@ const { Test } = require('mocha');
  *
  */
 
-describe('User decks service object', () => {
+describe.only('User decks service object', () => {
   let db;
 
   // We'll use this array as an example of mock data that represents
@@ -60,7 +59,7 @@ describe('User decks service object', () => {
 
   describe('getAllDecks()', () => {
     it('returns an empty array', () => {
-      return UserDecksService.getAllDecks(db).then((decks) =>
+      return DecksService.getAllDecks(db).then((decks) =>
         expect(decks).to.eql([])
       );
     });
@@ -72,7 +71,7 @@ describe('User decks service object', () => {
       beforeEach('insert test decks', () => db('user_decks').insert(testDecks));
 
       it('returns all test decks', () => {
-        return UserDecksService.getAllDecks(db).then((decks) =>
+        return DecksService.getAllDecks(db).then((decks) =>
           expect(decks).to.eql(testDecks)
         );
       });
@@ -84,7 +83,7 @@ describe('User decks service object', () => {
       // New deck to use as subject of our test
       const newDeck = helpers.makeNewDeck();
 
-      return UserDecksService.insertDeck(db, newDeck).then((actual) => {
+      return DecksService.insertDeck(db, newDeck).then((actual) => {
         expect(actual).to.eql(helpers.makeExpectedDeck(newDeck));
       });
     });
@@ -101,7 +100,7 @@ describe('User decks service object', () => {
       // using for all our promise chains. The second occurs if promise is
       // rejected. In the following test, we EXPECT the promise to be rejected
       // as the database should throw an error due to the NOT NULL constraint
-      return UserDecksService.insertDeck(db, newDeck).then(
+      return DecksService.insertDeck(db, newDeck).then(
         () => expect.fail('db should throw error'),
         (err) => expect(err.message).to.include('not-null')
       );
@@ -110,7 +109,7 @@ describe('User decks service object', () => {
 
   describe('getById()', () => {
     it('should return undefined', () => {
-      return UserDecksService.getById(db, 999).then(
+      return DecksService.getById(db, 999).then(
         (deck) => expect(deck).to.be.undefined
       );
     });
@@ -121,7 +120,7 @@ describe('User decks service object', () => {
       it('should return existing deck', () => {
         const expectedDeckId = 3;
         const expectedDeck = testDecks.find((a) => a.id === expectedDeckId);
-        return UserDecksService.getById(db, expectedDeckId).then((actual) =>
+        return DecksService.getById(db, expectedDeckId).then((actual) =>
           expect(actual).to.eql(expectedDeck)
         );
       });
@@ -130,7 +129,7 @@ describe('User decks service object', () => {
 
   describe('deleteDeck()', () => {
     it('should return 0 rows affected', () => {
-      return UserDecksService.deleteDeck(db, 999).then((rowsAffected) =>
+      return DecksService.deleteDeck(db, 999).then((rowsAffected) =>
         expect(rowsAffected).to.eq(0)
       );
     });
@@ -141,7 +140,7 @@ describe('User decks service object', () => {
       it('should return 1 row affected and record is removed from db', () => {
         const deletedDeckId = 1;
 
-        return UserDecksService.deleteDeck(db, deletedDeckId)
+        return DecksService.deleteDeck(db, deletedDeckId)
           .then((rowsAffected) => {
             expect(rowsAffected).to.eq(1);
             return db('user_decks').select('*');
@@ -157,7 +156,7 @@ describe('User decks service object', () => {
 
   describe('updateDeck()', () => {
     it('should return 0 rows affected', () => {
-      return UserDecksService.updateDeck(db, 999, {
+      return DecksService.updateDeck(db, 999, {
         title: 'new title!',
       }).then((rowsAffected) => expect(rowsAffected).to.eq(0));
     });
@@ -171,7 +170,7 @@ describe('User decks service object', () => {
         // make copy of testDeck in db, overwriting with newly updated field value
         const updatedDeck = { ...testDeck, title: 'New title!' };
 
-        return UserDecksService.updateDeck(db, updatedDeckId, updatedDeck)
+        return DecksService.updateDeck(db, updatedDeckId, updatedDeck)
           .then((rowsAffected) => {
             expect(rowsAffected).to.eq(1);
             return db('user_decks')
