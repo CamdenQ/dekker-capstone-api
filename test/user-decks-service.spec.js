@@ -1,5 +1,8 @@
 const knex = require('knex');
-const UserDecksService = require('../src/decks/user-decks-service');
+
+const UserDecksService = require('../src/decks/user-decks-service'),
+  helpers = require('./test-helpers');
+const { Test } = require('mocha');
 
 /**
  * GENERAL NOTE:
@@ -25,50 +28,8 @@ describe('User decks service object', () => {
 
   // We'll use this array as an example of mock data that represents
   // valid contents for our database
-  const testDecks = [
-    {
-      id: 1,
-      owner: 1,
-      title: 'Test Deck 1',
-      contents: '[1, 2, 3, 4]',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-    {
-      id: 2,
-      owner: 1,
-      title: 'Test Deck 2',
-      contents: '[1, 2, 3, 4]',
-      date_created: new Date('2020-05-30T16:28:32.615Z'),
-    },
-    {
-      id: 3,
-      owner: 2,
-      title: 'Test Deck 3',
-      contents: '[1, 2, 3, 4]',
-      date_created: new Date('2020-06-02T16:28:32.615Z'),
-    },
-  ];
-
-  const testUsers = [
-    {
-      username: 'tester1',
-      password: 'password',
-      nickname: 'tester1',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-    {
-      username: 'tester2',
-      password: 'password',
-      nickname: 'tester2',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-    {
-      username: 'tester3',
-      password: 'password',
-      nickname: 'tester3',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-  ];
+  const testUsers = helpers.makeUsersArray(),
+    testDecks = helpers.makeDecksArray();
 
   // Prepare the database connection using the `db` variable available
   // in the scope of the primary `describe` block. This means `db`
@@ -81,18 +42,18 @@ describe('User decks service object', () => {
   });
 
   // Before all tests run empty the dekker_users table
-  before('clean users db', () => db('dekker_users').truncate());
+  before('clean users db', () => helpers.cleanTables(db));
 
   // Before all tests run insert test users into dekker_users table
-  before('insert test users', () => db('dekker_users').insert(testUsers));
+  before('insert test users', () => helpers.seedUsersTable(db, testUsers));
 
   // Before all tests run and after each individual test, empty the user_decks table
-  before('clean decks db', () => db('user_decks').truncate());
+  before('clean decks db', () => helpers.cleanDecks(db));
 
-  afterEach('clean decks db', () => db('user_decks').truncate());
+  afterEach('clean decks db', () => helpers.cleanDecks(db));
 
   //After all tests run empty the dekker_users table
-  before('clean users db', () => db('dekker_users').truncate());
+  after('clean users db', () => helpers.cleanTables(db));
 
   // After all tests run, let go of the db connection
   after('destroy db connection', () => db.destroy());
@@ -121,32 +82,19 @@ describe('User decks service object', () => {
   describe('insertDeck()', () => {
     it('inserts record in db and returns deck with new id', () => {
       // New deck to use as subject of our test
-      const newDeck = {
-        owner: 3,
-        title: 'Test New Deck',
-        contents: '[1, 2, 3, 4]',
-        date_created: new Date('2020-06-02T16:28:32.615Z'),
-      };
+      const newDeck = helpers.makeNewDeck();
 
       return UserDecksService.insertDeck(db, newDeck).then((actual) => {
-        expect(actual).to.eql({
-          id: 1,
-          owner: newDeck.owner,
-          title: newDeck.title,
-          contents: newDeck.contents,
-          date_created: newDeck.date_created,
-        });
+        expect(actual).to.eql(helpers.makeExpectedDeck(newDeck));
       });
     });
 
     it('throws not-null constraint error if title not provided', () => {
       // Subject for the test does not contain a `title` field, so we
       // expect the database to prevent the record to be added
-      const newDeck = {
-        owner: 3,
-        contents: '[1, 2, 3, 4]',
-        date_created: new Date('2020-06-02T16:28:32.615Z'),
-      };
+      const newDeck = helpers.makeNewDeck();
+
+      delete newDeck.title;
 
       // The .then() method on a promise can optionally take a second argument:
       // The first callback occurs if the promise is resolved, which we've been

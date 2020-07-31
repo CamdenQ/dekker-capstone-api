@@ -5,21 +5,21 @@ function makeUsersArray() {
   return [
     {
       id: 1,
-      user_name: 'test-user1',
+      username: 'test-user1',
       password: 'testPassword1',
       nickname: 'TU1',
       date_created: new Date('2020-05-22T16:28:32.615Z'),
     },
     {
       id: 2,
-      user_name: 'test-user2',
+      username: 'test-user2',
       password: 'testPassword2',
       nickname: 'TU2',
       date_created: new Date('2020-05-24T16:28:32.615Z'),
     },
     {
       id: 3,
-      user_name: 'test-user3',
+      username: 'test-user3',
       password: 'testPassword3',
       nickname: 'TU3',
       date_created: new Date('2020-05-30T16:28:32.615Z'),
@@ -74,6 +74,24 @@ function makeDecksArray() {
   ];
 }
 
+function makeNewDeck() {
+  return {
+    deck_owner: 3,
+    title: 'Test New Deck',
+    contents: '[1, 2, 3, 4]',
+    date_created: new Date('2020-06-02T16:28:32.615Z'),
+  };
+}
+
+function makeNewUser() {
+  return {
+    username: 'newTester',
+    password: 'newPassword',
+    nickname: 'newTester',
+    date_created: new Date('2020-05-22T16:28:32.615Z'),
+  };
+}
+
 function makeFixtures() {
   const testUsers = makeUsersArray();
   const testDecks = makeDecksArray();
@@ -81,41 +99,23 @@ function makeFixtures() {
   return { testUsers, testDecks };
 }
 
-function makeExpectedRecipes(spirit_type, recipes) {
-  const spirit_cat = spirit_type.find((type) => type.id === recipes.spirit_id);
-
+function makeExpectedDeck(deck) {
   return {
-    id: recipes.id,
-    recipe_name: recipes.recipe_name,
-    recipe_img: recipes.recipe_img,
-    recipe_ingredients: recipes.recipe_ingredients,
-    recipe_prep: recipes.recipe_prep,
-    spirit_cat: spirit_cat.spirit_cat,
+    id: 1,
+    deck_owner: deck.deck_owner,
+    title: deck.title,
+    contents: deck.contents,
+    date_created: deck.date_created,
   };
 }
 
-function makeExpectedSpirits(spirit, spirit_type) {
-  const spirit_cat = spirit_type.find((type) => type.id === spirit.spirit_id);
-
+function makeExpectedUser(user) {
   return {
-    id: spirit.id,
-    spirit_name: spirit.spirit_name,
-    spirit_cat: spirit_cat.spirit_cat,
-    user_id: spirit.user_id,
-    spirit_id: spirit.spirit_id,
-  };
-}
-
-function makeExpectedFavorites(favorite, recipes) {
-  const recipe = recipes.find((r) => r.id === favorite.recipe_id);
-  const recipeName = recipe.recipe_name;
-  const spirit_id = recipe.spirit_id;
-  return {
-    favorite_id: favorite.id,
-    id: favorite.recipe_id,
-    user_id: favorite.user_id,
-    recipe_name: recipeName,
-    spirit_id,
+    id: 1,
+    username: user.username,
+    password: user.password,
+    nickname: user.nickname,
+    date_created: user.date_created,
   };
 }
 
@@ -123,6 +123,22 @@ function cleanTables(db) {
   return db.raw(
     `TRUNCATE
       dekker_users,
+      user_decks
+      restart identity cascade`
+  );
+}
+
+function cleanUsers(db) {
+  return db.raw(
+    `TRUNCATE
+      dekker_users
+      restart identity cascade`
+  );
+}
+
+function cleanDecks(db) {
+  return db.raw(
+    `TRUNCATE
       user_decks
       restart identity cascade`
   );
@@ -143,25 +159,10 @@ function seedUsersTable(db, users) {
     );
 }
 
-function seedOtherTables(db, recipes, spirits, spiritType, users, favorites) {
+function seedDecksTable(db, users, decks) {
   return db.transaction(async (trx) => {
     await seedUsersTable(trx, users);
-    await trx.into('spirit_type').insert(spiritType);
-    await trx.raw(`SELECT setval('spirit_type_id_seq', ?)`, [
-      spiritType[spiritType.length - 1].id,
-    ]);
-    await trx.into('spirits').insert(spirits);
-    await trx.raw(`SELECT setval('spirits_id_seq', ?)`, [
-      spirits[spirits.length - 1].id,
-    ]);
-    await trx.into('recipes').insert(recipes);
-    await trx.raw(`SELECT setval('recipes_id_seq', ?)`, [
-      recipes[recipes.length - 1].id,
-    ]);
-    await trx.into('favorites').insert(favorites);
-    await trx.raw(`SELECT setval('favorites_id_seq', ?)`, [
-      favorites[favorites.length - 1].id,
-    ]);
+    await trx.into('user_decks').insert(decks);
   });
 }
 
@@ -173,7 +174,7 @@ function seedMaliciousSpiirt(db, users, spirit) {
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_name,
+    subject: user.username,
     algorithm: 'HS256',
   });
   return `bearer ${token}`;
@@ -182,14 +183,18 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
 module.exports = {
   makeUsersArray,
   makeDecksArray,
+  makeNewDeck,
+  makeNewUser,
   makeAuthHeader,
   makeFixtures,
-  makeExpectedRecipes,
-  makeExpectedSpirits,
-  makeExpectedFavorites,
+  makeExpectedUser,
+  makeExpectedDeck,
 
   cleanTables,
+  cleanUsers,
+  cleanDecks,
+
   seedUsersTable,
-  seedOtherTables,
+  seedDecksTable,
   seedMaliciousSpiirt,
 };

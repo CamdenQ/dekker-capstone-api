@@ -1,5 +1,7 @@
 const knex = require('knex');
 const DekkerUsersService = require('../../src/dekker-users-service');
+const helmet = require('helmet');
+const helpers = require('../test-helpers');
 
 /**
  * GENERAL NOTE:
@@ -25,26 +27,7 @@ describe.only('Dekker users service object', () => {
 
   // We'll use this array as an example of mock data that represents
   // valid contents for our database
-  const testUsers = [
-    {
-      username: 'tester1',
-      password: 'password',
-      nickname: 'tester1',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-    {
-      username: 'tester2',
-      password: 'password',
-      nickname: 'tester2',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-    {
-      username: 'tester3',
-      password: 'password',
-      nickname: 'tester3',
-      date_created: new Date('2020-05-22T16:28:32.615Z'),
-    },
-  ];
+  const testUsers = helpers.makeUsersArray();
 
   // Prepare the database connection using the `db` variable available
   // in the scope of the primary `describe` block. This means `db`
@@ -58,19 +41,20 @@ describe.only('Dekker users service object', () => {
 
   // Before all tests run and after each individual test, empty the
   // dekker_users table
-  before('clean db', () => db('dekker_users').truncate());
-  afterEach('clean db', () => db('dekker_users').truncate());
+  before('clean db', () => helpers.cleanUsers(db));
+  afterEach('clean db', () => helpers.cleanUsers(db));
 
   // After all tests run, let go of the db connection
   after('destroy db connection', () => db.destroy());
 
   describe('getAllUsers()', () => {
-    it('returns an empty array', () => {
-      return DekkerUsersService.getAllUsers(db).then((users) =>
-        expect(users).to.eql([])
-      );
+    context('with no data present', () => {
+      it('returns an empty array', () => {
+        return DekkerUsersService.getAllUsers(db).then((users) =>
+          expect(users).to.eql([])
+        );
+      });
     });
-
     // Whenever we set a context with data present, we should always include
     // a beforeEach() hook within the context that takes care of adding the
     // appropriate data to our table
@@ -88,34 +72,21 @@ describe.only('Dekker users service object', () => {
   });
 
   describe('insertUser()', () => {
-    it('inserts record in db and returns deck with new id', () => {
+    it('inserts record in db and returns user with new id', () => {
       // New deck to use as subject of our test
-      const newUser = {
-        username: 'newTester',
-        password: 'newPassword',
-        nickname: 'newTester',
-        date_created: new Date('2020-05-22T16:28:32.615Z'),
-      };
+      const newUser = helpers.makeNewUser();
 
       return DekkerUsersService.insertUser(db, newUser).then((actual) => {
-        expect(actual).to.eql({
-          id: 1,
-          username: newUser.username,
-          password: newUser.password,
-          nickname: newUser.nickname,
-          date_created: newUser.date_created,
-        });
+        expect(actual).to.eql(helpers.makeExpectedUser(newUser));
       });
     });
 
     it('throws not-null constraint error if username not provided', () => {
       // Subject for the test does not contain a `usernam` field, so we
       // expect the database to prevent the record to be added
-      const newUser = {
-        password: 'newPassword',
-        nickname: 'newTester',
-        date_created: new Date('2020-05-22T16:28:32.615Z'),
-      };
+      const newUser = helpers.makeNewUser();
+
+      delete newUser.username;
 
       // The .then() method on a promise can optionally take a second argument:
       // The first callback occurs if the promise is resolved, which we've been
