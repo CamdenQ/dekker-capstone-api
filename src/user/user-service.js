@@ -1,29 +1,48 @@
-const DekkerUsersService = {
-  getAllUsers(knex) {
-    return knex.select('*').from('dekker_users');
+const REGEX_UPPER_LOWER_NUMBER = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[\S]+/;
+const xss = require('xss');
+const bcrypt = require('bcryptjs');
+
+const UserService = {
+  validatePassword(password) {
+    if (password.length < 8) {
+      return 'Password must be longer than 8 characters';
+    }
+    if (password.length > 72) {
+      return 'Password must be shorter than 72 characters';
+    }
+    if (password.startsWith(' ') || password.endsWith(' ')) {
+      return 'Password must not start or end with empty spaces';
+    }
+    if (!REGEX_UPPER_LOWER_NUMBER.test(password)) {
+      return 'Password must contain an uppercase, lowercase, and number';
+    }
+    return null;
   },
 
-  insertUser(knex, newUser) {
-    return knex
+  hasUserWithUsername(db, username) {
+    return db('dekker_users')
+      .where({ username })
+      .first()
+      .then((user) => !!user);
+  },
+  insertUser(db, newUser) {
+    return db
       .insert(newUser)
       .into('dekker_users')
       .returning('*')
-      .then((rows) => {
-        return rows[0];
-      });
+      .then(([user]) => user);
   },
-
-  getById(knex, id) {
-    return knex.select('*').from('dekker_users').where('id', id).first();
+  serializeUser(user) {
+    return {
+      id: user.id,
+      username: xss(user.username),
+      password: xss(user.password),
+      nickname: xss(user.nickname),
+    };
   },
-
-  deleteUser(knex, id) {
-    return knex('dekker_users').delete().where({ id });
-  },
-
-  updateUser(knex, id, newUserFields) {
-    return knex('dekker_users').update(newUserFields).where({ id });
+  hashPassword(password) {
+    return bcrypt.hash(password, 12);
   },
 };
 
-module.exports = DekkerUsersService;
+module.exports = UserService;

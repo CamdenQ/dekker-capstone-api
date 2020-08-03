@@ -2,6 +2,7 @@ const knex = require('knex');
 
 const DecksService = require('../src/decks/decks-service'),
   helpers = require('./test-helpers');
+const testHelpers = require('./test-helpers');
 
 /**
  * GENERAL NOTE:
@@ -27,8 +28,7 @@ describe('User decks service object', () => {
 
   // We'll use this array as an example of mock data that represents
   // valid contents for our database
-  const testUsers = helpers.makeUsersArray(),
-    testDecks = helpers.makeDecksArray();
+  const { testUsers, testDecks } = helpers.makeFixtures();
 
   // Prepare the database connection using the `db` variable available
   // in the scope of the primary `describe` block. This means `db`
@@ -46,9 +46,7 @@ describe('User decks service object', () => {
   // Before all tests run insert test users into dekker_users table
   before('insert test users', () => helpers.seedUsersTable(db, testUsers));
 
-  // Before all tests run and after each individual test, empty the user_decks table
-  before('clean decks db', () => helpers.cleanDecks(db));
-
+  // After each individual test empty the user_decks table
   afterEach('clean decks db', () => helpers.cleanDecks(db));
 
   //After all tests run empty the dekker_users table
@@ -58,21 +56,22 @@ describe('User decks service object', () => {
   after('destroy db connection', () => db.destroy());
 
   describe('getAllDecks()', () => {
-    it('returns an empty array', () => {
-      return DecksService.getAllDecks(db).then((decks) =>
-        expect(decks).to.eql([])
-      );
+    context('with no data present', () => {
+      it('returns an empty array', () => {
+        return DecksService.getAllDecks(db, 1).then((decks) =>
+          expect(decks).to.eql([])
+        );
+      });
     });
-
     // Whenever we set a context with data present, we should always include
     // a beforeEach() hook within the context that takes care of adding the
     // appropriate data to our table
     context('with data present', () => {
       beforeEach('insert test decks', () => db('user_decks').insert(testDecks));
-
-      it('returns all test decks', () => {
-        return DecksService.getAllDecks(db).then((decks) =>
-          expect(decks).to.eql(testDecks)
+      it('returns all test decks for given test user', () => {
+        let expectedDecks = testHelpers.makeExpectedDecksForUser(testDecks, 1);
+        return DecksService.getAllDecks(db, 1).then((decks) =>
+          expect(decks).to.eql(expectedDecks)
         );
       });
     });

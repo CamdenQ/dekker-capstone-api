@@ -160,7 +160,7 @@ describe('Dekker users service object', () => {
       it('should successfully update an user', () => {
         const updatedUserId = 1;
         const testUser = testUsers.find((a) => a.id === updatedUserId);
-        // make copy of testUser in db, overwriting with newly updated field value
+        // make copy of testUser in db, overwriting with newly updated password value
         const updatedUser = { ...testUser, password: 'newPassword' };
 
         return UserService.updateUser(db, updatedUserId, updatedUser)

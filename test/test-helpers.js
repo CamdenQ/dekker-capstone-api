@@ -109,6 +109,10 @@ function makeExpectedDeck(deck) {
   };
 }
 
+function makeExpectedDecksForUser(decks, user) {
+  return decks.filter((deck) => deck.deck_owner === user);
+}
+
 function makeExpectedUser(user) {
   return {
     id: 1,
@@ -189,6 +193,7 @@ module.exports = {
   makeFixtures,
   makeExpectedUser,
   makeExpectedDeck,
+  makeExpectedDecksForUser,
 
   cleanTables,
   cleanUsers,
