@@ -84,5 +84,4 @@ module.exports = {
   cleanDecks,
 
   seedDecksTable,
-  seedMaliciousSpiirt,
 };
