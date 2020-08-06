@@ -28,7 +28,7 @@ describe('User decks service object', () => {
 
   // We'll use this array as an example of mock data that represents
   // valid contents for our database
-  const { testUsers, testDecks } = helpers.makeFixtures();
+  const testDecks = helpers.makeDecksArray();
 
   // Prepare the database connection using the `db` variable available
   // in the scope of the primary `describe` block. This means `db`
@@ -40,17 +40,14 @@ describe('User decks service object', () => {
     });
   });
 
-  // Before all tests run empty the dekker_users table
-  before('clean users db', () => helpers.cleanTables(db));
-
-  // Before all tests run insert test users into dekker_users table
-  before('insert test users', () => helpers.seedUsersTable(db, testUsers));
+  // Before all tests run empty the user_decks table
+  before('clean users db', () => helpers.cleanDecks(db));
 
   // After each individual test empty the user_decks table
   afterEach('clean decks db', () => helpers.cleanDecks(db));
 
-  //After all tests run empty the dekker_users table
-  after('clean users db', () => helpers.cleanTables(db));
+  //After all tests run empty the user_decks table
+  after('clean users db', () => helpers.cleanDecks(db));
 
   // After all tests run, let go of the db connection
   after('destroy db connection', () => db.destroy());
@@ -68,9 +65,11 @@ describe('User decks service object', () => {
     // appropriate data to our table
     context('with data present', () => {
       beforeEach('insert test decks', () => db('user_decks').insert(testDecks));
-      it('returns all test decks for given test user', () => {
-        let expectedDecks = testHelpers.makeExpectedDecksForUser(testDecks, 1);
-        return DecksService.getAllDecks(db, 1).then((decks) =>
+      it('returns all test decks', () => {
+        const expectedDecks = testDecks.map((deck) =>
+          testHelpers.makeExpectedDeck(deck)
+        );
+        return DecksService.getAllDecks(db).then((decks) =>
           expect(decks).to.eql(expectedDecks)
         );
       });
@@ -106,9 +105,9 @@ describe('User decks service object', () => {
     });
   });
 
-  describe('getById()', () => {
+  describe('getDeckById()', () => {
     it('should return undefined', () => {
-      return DecksService.getById(db, 999).then(
+      return DecksService.getDeckById(db, 999).then(
         (deck) => expect(deck).to.be.undefined
       );
     });
@@ -118,8 +117,8 @@ describe('User decks service object', () => {
 
       it('should return existing deck', () => {
         const expectedDeckId = 3;
-        const expectedDeck = testDecks.find((a) => a.id === expectedDeckId);
-        return DecksService.getById(db, expectedDeckId).then((actual) =>
+        const expectedDeck = testDecks.find((d) => d.id === expectedDeckId);
+        return DecksService.getDeckById(db, expectedDeckId).then((actual) =>
           expect(actual).to.eql(expectedDeck)
         );
       });

@@ -1,6 +1,6 @@
 const UserDecksService = {
-  getAllDecks(db, deck_owner) {
-    return db.select('*').from('user_decks').where('deck_owner', deck_owner);
+  getAllDecks(db) {
+    return db.select('*').from('user_decks');
   },
 
   insertDeck(db, newDeck) {
@@ -13,7 +13,7 @@ const UserDecksService = {
       });
   },
 
-  getById(db, id) {
+  getDeckById(db, id) {
     return db.select('*').from('user_decks').where('id', id).first();
   },
 
