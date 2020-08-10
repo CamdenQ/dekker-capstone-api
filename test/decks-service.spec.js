@@ -22,13 +22,12 @@ const DecksService = require('../src/decks/decks-service'),
  *
  */
 
-describe.only('User decks service object', () => {
+describe('User decks service object', () => {
   let db;
 
   // We'll use this array as an example of mock data that represents
   // valid contents for our database
-  const testUsers = helpers.makeUsersArray(),
-    testDecks = helpers.makeDecksArray();
+  const testDecks = helpers.makeDecksArray();
 
   // Prepare the database connection using the `db` variable available
   // in the scope of the primary `describe` block. This means `db`
@@ -40,39 +39,37 @@ describe.only('User decks service object', () => {
     });
   });
 
-  // Before all tests run empty the dekker_users table
-  before('clean users db', () => helpers.cleanTables(db));
+  // Before all tests run empty the user_decks table
+  before('clean users db', () => helpers.cleanDecks(db));
 
-  // Before all tests run insert test users into dekker_users table
-  before('insert test users', () => helpers.seedUsersTable(db, testUsers));
-
-  // Before all tests run and after each individual test, empty the user_decks table
-  before('clean decks db', () => helpers.cleanDecks(db));
-
+  // After each individual test empty the user_decks table
   afterEach('clean decks db', () => helpers.cleanDecks(db));
 
-  //After all tests run empty the dekker_users table
-  after('clean users db', () => helpers.cleanTables(db));
+  //After all tests run empty the user_decks table
+  after('clean users db', () => helpers.cleanDecks(db));
 
   // After all tests run, let go of the db connection
   after('destroy db connection', () => db.destroy());
 
   describe('getAllDecks()', () => {
-    it('returns an empty array', () => {
-      return DecksService.getAllDecks(db).then((decks) =>
-        expect(decks).to.eql([])
-      );
+    context('with no data present', () => {
+      it('returns an empty array', () => {
+        return DecksService.getAllDecks(db, 1).then((decks) =>
+          expect(decks).to.eql([])
+        );
+      });
     });
-
     // Whenever we set a context with data present, we should always include
     // a beforeEach() hook within the context that takes care of adding the
     // appropriate data to our table
     context('with data present', () => {
       beforeEach('insert test decks', () => db('user_decks').insert(testDecks));
-
       it('returns all test decks', () => {
+        const expectedDecks = testDecks.map((deck) =>
+          helpers.makeExpectedDeck(deck)
+        );
         return DecksService.getAllDecks(db).then((decks) =>
-          expect(decks).to.eql(testDecks)
+          expect(decks).to.eql(expectedDecks)
         );
       });
     });
@@ -107,9 +104,9 @@ describe.only('User decks service object', () => {
     });
   });
 
-  describe('getById()', () => {
+  describe('getDeckById()', () => {
     it('should return undefined', () => {
-      return DecksService.getById(db, 999).then(
+      return DecksService.getDeckById(db, 999).then(
         (deck) => expect(deck).to.be.undefined
       );
     });
@@ -119,8 +116,8 @@ describe.only('User decks service object', () => {
 
       it('should return existing deck', () => {
         const expectedDeckId = 3;
-        const expectedDeck = testDecks.find((a) => a.id === expectedDeckId);
-        return DecksService.getById(db, expectedDeckId).then((actual) =>
+        const expectedDeck = testDecks.find((d) => d.id === expectedDeckId);
+        return DecksService.getDeckById(db, expectedDeckId).then((actual) =>
           expect(actual).to.eql(expectedDeck)
         );
       });

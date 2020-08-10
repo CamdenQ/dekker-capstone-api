@@ -2,8 +2,10 @@ require('dotenv').config();
 const express = require('express'),
   morgan = require('morgan'),
   cors = require('cors'),
-  helmet = require('helmet'),
-  { NODE_ENV } = require('./config');
+  helmet = require('helmet');
+
+const { NODE_ENV } = require('./config'),
+  DecksRouter = require('./decks/decks-router');
 
 const app = express();
 
@@ -15,6 +17,7 @@ app
   .use(helmet())
   .use(cors())
   .use(express.json())
+  .use('/api/decks', DecksRouter)
   .use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {
@@ -26,7 +29,7 @@ app
     res.status(500).json(response)
   })
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
   res.send('Hello, world!');
 });
 
