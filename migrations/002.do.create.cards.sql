@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS cards (
   name TEXT NOT NULL,
   colors TEXT[] NOT NULL,
   types TEXT[] NOT NULL,
-  imageUrl TEXT NOT NULL
+  image_url TEXT NOT NULL
 );

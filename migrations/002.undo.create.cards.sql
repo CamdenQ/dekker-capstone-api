@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS user_decks;
+DROP TABLE IF EXISTS cards;
