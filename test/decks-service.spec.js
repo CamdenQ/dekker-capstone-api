@@ -2,7 +2,6 @@ const knex = require('knex');
 
 const DecksService = require('../src/decks/decks-service'),
   helpers = require('./test-helpers');
-const testHelpers = require('./test-helpers');
 
 /**
  * GENERAL NOTE:
@@ -67,7 +66,7 @@ describe('User decks service object', () => {
       beforeEach('insert test decks', () => db('user_decks').insert(testDecks));
       it('returns all test decks', () => {
         const expectedDecks = testDecks.map((deck) =>
-          testHelpers.makeExpectedDeck(deck)
+          helpers.makeExpectedDeck(deck)
         );
         return DecksService.getAllDecks(db).then((decks) =>
           expect(decks).to.eql(expectedDecks)
