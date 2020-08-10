@@ -1980,7 +1980,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=452965&type=card',
   },
-  null,
   {
     name: 'Absorb',
     colors: ['Blue', 'White'],
@@ -2681,7 +2680,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=457246&type=card',
   },
-  null,
   {
     name: 'Gateway Plaza',
     colors: [],
@@ -3382,7 +3380,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=457361&type=card',
   },
-  null,
   {
     name: 'Rubblebelt Recluse',
     colors: ['Red'],
@@ -3964,7 +3961,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=457359&type=card',
   },
-  null,
   {
     name: 'Ahn-Crop Invader',
     colors: ['Red'],
@@ -3994,11 +3990,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461111&type=card',
   },
   {
-    name: 'Ajani, the Greathearted',
-    colors: ['Green', 'White'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Angrath's Rampage",
     colors: ['Black', 'Red'],
     types: ['Sorcery'],
@@ -4011,11 +4002,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461154&type=card',
-  },
-  {
-    name: 'Angrath, Captain of Chaos',
-    colors: ['Black', 'Red'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Arboreal Grazer',
@@ -4039,11 +4025,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461077&type=card',
   },
   {
-    name: 'Arlinn, Voice of the Pack',
-    colors: ['Green'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Ashiok's Skulker",
     colors: ['Blue'],
     types: ['Creature'],
@@ -4056,11 +4037,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461155&type=card',
-  },
-  {
-    name: 'Ashiok, Dream Render',
-    colors: ['Black', 'Blue'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Augur of Bolas',
@@ -4258,7 +4234,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461046&type=card',
   },
-  { name: 'Chandra, Fire Artisan', colors: ['Red'], types: ['Planeswalker'] },
   {
     name: 'Charity Extractor',
     colors: ['Black'],
@@ -4337,11 +4312,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461010&type=card',
   },
   {
-    name: 'Davriel, Rogue Shadowmage',
-    colors: ['Black'],
-    types: ['Planeswalker'],
-  },
-  {
     name: 'Deathsprout',
     colors: ['Black', 'Green'],
     types: ['Instant'],
@@ -4412,11 +4382,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461118&type=card',
   },
   {
-    name: 'Domri, Anarch of Bolas',
-    colors: ['Green', 'Red'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Dovin's Veto",
     colors: ['Blue', 'White'],
     types: ['Instant'],
@@ -4429,11 +4394,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461156&type=card',
-  },
-  {
-    name: 'Dovin, Hand of Control',
-    colors: ['Blue', 'White'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Dreadhorde Arcanist',
@@ -4645,8 +4605,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460940&type=card',
   },
-  null,
-  { name: 'Gideon Blackblade', colors: ['White'], types: ['Planeswalker'] },
   {
     name: "Gideon's Battle Cry",
     colors: ['White'],
@@ -4809,11 +4767,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461157&type=card',
   },
   {
-    name: "Huatli, the Sun's Heart",
-    colors: ['Green', 'White'],
-    types: ['Planeswalker'],
-  },
-  {
     name: 'Ignite the Beacon',
     colors: ['White'],
     types: ['Instant'],
@@ -4919,11 +4872,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460981&type=card',
   },
   {
-    name: 'Jace, Wielder of Mysteries',
-    colors: ['Blue'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Jaya's Greeting",
     colors: ['Red'],
     types: ['Instant'],
@@ -4938,21 +4886,11 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461062&type=card',
   },
   {
-    name: 'Jaya, Venerated Firemage',
-    colors: ['Red'],
-    types: ['Planeswalker'],
-  },
-  {
     name: 'Jiang Yanggu, Wildcrafter',
     colors: ['Green'],
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461091&type=card',
-  },
-  {
-    name: 'Jiang Yanggu, Wildcrafter',
-    colors: ['Green'],
-    types: ['Planeswalker'],
   },
   {
     name: "Karn's Bastion",
@@ -4968,7 +4906,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460928&type=card',
   },
-  { name: 'Karn, the Great Creator', colors: [], types: ['Planeswalker'] },
   {
     name: "Kasmina's Transmutation",
     colors: ['Blue'],
@@ -4982,11 +4919,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460983&type=card',
-  },
-  {
-    name: 'Kasmina, Enigmatic Mentor',
-    colors: ['Blue'],
-    types: ['Planeswalker'],
   },
   {
     name: "Kaya's Ghostform",
@@ -5003,11 +4935,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461158&type=card',
   },
   {
-    name: 'Kaya, Bane of the Dead',
-    colors: ['Black', 'White'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Kiora's Dambreaker",
     colors: ['Blue'],
     types: ['Creature'],
@@ -5020,11 +4947,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461159&type=card',
-  },
-  {
-    name: 'Kiora, Behemoth Beckoner',
-    colors: ['Green', 'Blue'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Kraul Stinger',
@@ -5095,11 +5017,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461024&type=card',
-  },
-  {
-    name: 'Liliana, Dreadhorde General',
-    colors: ['Black'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Living Twister',
@@ -5221,11 +5138,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461160&type=card',
   },
   {
-    name: 'Nahiri, Storm of Stone',
-    colors: ['Red', 'White'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Narset's Reversal",
     colors: ['Blue'],
     types: ['Instant'],
@@ -5238,11 +5150,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460988&type=card',
-  },
-  {
-    name: 'Narset, Parter of Veils',
-    colors: ['Blue'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Neheb, Dreadhorde Champion',
@@ -5273,11 +5180,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461134&type=card',
   },
   {
-    name: 'Nicol Bolas, Dragon-God',
-    colors: ['Black', 'Red', 'Blue'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Nissa's Triumph",
     colors: ['Green'],
     types: ['Sorcery'],
@@ -5290,11 +5192,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461096&type=card',
-  },
-  {
-    name: 'Nissa, Who Shakes the World',
-    colors: ['Green'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Niv-Mizzet Reborn',
@@ -5310,7 +5207,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460990&type=card',
   },
-  null,
   {
     name: 'Oath of Kaya',
     colors: ['Black', 'White'],
@@ -5331,11 +5227,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461027&type=card',
-  },
-  {
-    name: 'Ob Nixilis, the Hate-Twisted',
-    colors: ['Black'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Orzhov Guildgate',
@@ -5457,11 +5348,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461138&type=card',
   },
   {
-    name: 'Ral, Storm Conduit',
-    colors: ['Red', 'Blue'],
-    types: ['Planeswalker'],
-  },
-  {
     name: 'Rally of Wings',
     colors: ['White'],
     types: ['Instant'],
@@ -5539,11 +5425,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461161&type=card',
   },
   {
-    name: 'Saheeli, Sublime Artificer',
-    colors: ['Red', 'Blue'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Samut's Sprint",
     colors: ['Red'],
     types: ['Instant'],
@@ -5558,18 +5439,12 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461162&type=card',
   },
   {
-    name: 'Samut, Tyrant Smasher',
-    colors: ['Green', 'Red'],
-    types: ['Planeswalker'],
-  },
-  {
     name: 'Sarkhan the Masterless',
     colors: ['Red'],
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461070&type=card',
   },
-  { name: 'Sarkhan the Masterless', colors: ['Red'], types: ['Planeswalker'] },
   {
     name: "Sarkhan's Catharsis",
     colors: ['Red'],
@@ -5639,11 +5514,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461144&type=card',
-  },
-  {
-    name: 'Sorin, Vengeful Bloodlord',
-    colors: ['Black', 'White'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Soul Diviner',
@@ -5758,11 +5628,6 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461147&type=card',
   },
   {
-    name: 'Tamiyo, Collector of Tales',
-    colors: ['Green', 'Blue'],
-    types: ['Planeswalker'],
-  },
-  {
     name: "Teferi's Time Twist",
     colors: ['Blue'],
     types: ['Instant'],
@@ -5775,11 +5640,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461148&type=card',
-  },
-  {
-    name: 'Teferi, Time Raveler',
-    colors: ['Blue', 'White'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Tenth District Legionnaire',
@@ -5802,7 +5662,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460959&type=card',
   },
-  { name: 'Teyo, the Shieldmage', colors: ['White'], types: ['Planeswalker'] },
   {
     name: 'Tezzeret, Master of the Bridge',
     colors: ['Black', 'Blue'],
@@ -5824,7 +5683,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460964&type=card',
   },
-  { name: 'The Wanderer', colors: ['White'], types: ['Planeswalker'] },
   {
     name: 'Thunder Drake',
     colors: ['Blue'],
@@ -5852,11 +5710,6 @@ const CARDS_DB = [
     types: ['Planeswalker'],
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461073&type=card',
-  },
-  {
-    name: 'Tibalt, Rakish Instigator',
-    colors: ['Red'],
-    types: ['Planeswalker'],
   },
   {
     name: 'Time Wipe',
@@ -5942,7 +5795,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=460929&type=card',
   },
-  { name: 'Ugin, the Ineffable', colors: [], types: ['Planeswalker'] },
   {
     name: 'Unlikely Aid',
     colors: ['Black'],
@@ -5971,7 +5823,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=461109&type=card',
   },
-  null,
   {
     name: 'Act of Treason',
     colors: ['Red'],
@@ -6448,7 +6299,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=466960&type=card',
   },
-  { name: 'Corpse Knight', colors: ['Black', 'White'], types: ['Creature'] },
   {
     name: 'Creeping Trailblazer',
     colors: ['Green', 'Red'],
@@ -6666,7 +6516,6 @@ const CARDS_DB = [
     image_url:
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=466854&type=card',
   },
-  null,
   {
     name: 'Fearless Halberdier',
     colors: ['Red'],
@@ -8068,4 +7917,5 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=467011&type=card',
   },
 ];
+
 module.exports = CARDS_DB;
