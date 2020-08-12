@@ -1,4 +1,4 @@
-const CARDS_DB = [
+module.exports = [
   {
     name: 'Affectionate Indrik',
     colors: ['Green'],
@@ -7917,5 +7917,3 @@ const CARDS_DB = [
       'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=467011&type=card',
   },
 ];
-
-module.exports = CARDS_DB;

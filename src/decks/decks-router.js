@@ -2,48 +2,43 @@ const express = require('express');
 const DecksService = require('./decks-service');
 
 const decksRouter = express.Router();
-bodyParser = express.json();
 
-decksRouter
-  .route('/')
-  .get(bodyParser, (req, res, next) => {
-    DecksService.getAllDecks(req.app.get('db'))
-      .then((decks) => {
-        res.status(200).json(decks);
-      })
-      .catch(next);
-  })
-  .post(bodyParser, (req, res, next) => {
-    const { title, contents, date_created } = req.body;
-    const newDeck = { title, contents, date_created };
+decksRouter.get('/', (_, res, next) => {
+  DecksService.getAllDecks()
+    .then((decks) => {
+      res.status(200).json(decks);
+    })
+    .catch(next);
+});
 
-    DecksService.insertDeck(req.app.get('db'), newDeck)
-      .then((post) => {
-        data = {
-          id: post.id,
-          title: post.title,
-          contents: post.contents,
-          date_created: post.date_created,
-        };
-        res.status(201).json(data);
-      })
-      .catch(next);
-  })
-  .delete(bodyParser, (req, res, next) => {
-    const { id } = req.body;
+decksRouter.post('/', (req, res, next) => {
+  DecksService.create(req.body)
+    .then((decks) => {
+      res.status(201).json(decks[0]);
+    })
+    .catch(next);
+});
 
-    DecksService.deleteDeck(req.app.get('db'), id)
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(next);
-  });
-
-decksRouter.route('/:id').get((req, res, next) => {
-  const id = req.params.id;
-  DecksService.getDeckById(req.app.get('db'), id)
+decksRouter.get('/:id', (req, res, next) => {
+  DecksService.getOne(req.params.id)
     .then((deck) => {
       res.status(200).json(deck);
+    })
+    .catch(next);
+});
+
+decksRouter.patch('/:id', (req, res, next) => {
+  DecksService.update(req.params.id, req.body)
+    .then((decks) => {
+      res.status(200).json(decks[0]);
+    })
+    .catch(next);
+});
+
+decksRouter.delete('/:id', (req, res, next) => {
+  DecksService.remove(req.params.id)
+    .then(() => {
+      res.status(200).json({ deleted: true });
     })
     .catch(next);
 });

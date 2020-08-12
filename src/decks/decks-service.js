@@ -1,29 +1,22 @@
-const UserDecksService = {
-  getAllDecks(db) {
-    return db.select('*').from('user_decks');
-  },
+'use strict';
+const knex = require('../../db/knex');
 
-  insertDeck(db, newDeck) {
-    return db
-      .insert(newDeck)
-      .into('user_decks')
-      .returning('*')
-      .then((rows) => {
-        return rows[0];
-      });
+const DecksService = {
+  getAllDecks() {
+    return knex('decks');
   },
-
-  getDeckById(db, id) {
-    return db.select('*').from('user_decks').where('id', id).first();
+  getOne(id) {
+    return knex('decks').where('id', id).first();
   },
-
-  deleteDeck(db, id) {
-    return db('user_decks').delete().where({ id });
+  create(deck) {
+    return knex('decks').insert(deck, '*');
   },
-
-  updateDeck(db, id, newDeckFields) {
-    return db('user_decks').update(newDeckFields).where({ id });
+  update(id, deck) {
+    return knex('decks').where('id', id).update(deck, '*');
+  },
+  remove(id) {
+    return knex('decks').where('id', id).del();
   },
 };
 
-module.exports = UserDecksService;
+module.exports = DecksService;
