@@ -1,15 +1,14 @@
-const request = require('supertest');
-const expect = require('chai').expect;
+'use strict';
 
 const knex = require('../db/knex');
 const app = require('../src/app');
-const cards = require('./fixtures/cards');
+const { cards } = require('./fixtures');
+
+before(() => {
+  return knex.migrate.latest().then(() => knex.seed.run());
+});
 
 describe('Cards router', () => {
-  before(() => {
-    return knex.migrate.latest().then(() => knex.seed.run());
-  });
-
   it('Gets all the cards', () => {
     return request(app)
       .get('/api/cards')

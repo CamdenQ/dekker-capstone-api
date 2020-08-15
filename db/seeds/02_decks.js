@@ -1,4 +1,4 @@
-const decks = require('../../utils/decks-dev');
+const decks = require('../../utils/decks');
 
 exports.seed = function (knex) {
   return knex('decks')

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "(dropdb --if-exists dekker-test && createdb dekker-test) && SET NODE_ENV=test mocha --exit"
+    "test": "dropdb --if-exists decker-test && createdb decker-test && cross-env NODE_ENV=test mocha --require test/setup.js --exit"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +16,13 @@
     "express": "^4.17.1",
     "helmet": "^4.0.0",
     "knex": "^0.21.4",
+    "knex-paginate": "^1.2.3",
     "morgan": "^1.10.0",
     "pg": "^8.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2"

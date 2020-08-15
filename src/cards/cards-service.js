@@ -1,9 +1,13 @@
 'use strict';
+
 const knex = require('../../db/knex');
 
 const CardsService = {
-  getAllCards() {
-    return knex.select('*').from('cards');
+  getAllCards(page) {
+    return knex('cards').paginate({
+      perPage: 10,
+      currentPage: page,
+    });
   },
 };
 

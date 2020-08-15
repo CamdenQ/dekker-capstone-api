@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+
 const PORT = process.env.PORT || 8000;
 
 const cardsRouter = require('./cards/cards-router');
@@ -20,12 +21,9 @@ const allowedOrigins = ['http://localhost:3000'];
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin - like mobile apps, curl, postman
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          'The CORS policy for this site does not ' +
-          'allow access from the specified Origin.';
+        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
         return callback(new Error(msg), false);
       }
       return callback(null, true);
@@ -38,7 +36,7 @@ app.use('/api/decks', decksRouter);
 
 app.use(errorHandler);
 
-function errorHandler(error, req, res, next) {
+function errorHandler(error, _req, res, _next) {
   const code = error.status || 500;
 
   if (process.env.NODE_ENV === 'production') {

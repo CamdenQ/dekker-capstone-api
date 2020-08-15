@@ -1,10 +1,7 @@
-const request = require('supertest');
-const expect = require('chai').expect;
+'use strict';
 
-// const knex = require('../db/knex');
 const app = require('../src/app');
-const decks = require('./fixtures/decks');
-const deck = require('./fixtures/deck');
+const { decks, deck } = require('./fixtures');
 
 describe('Decks router', () => {
   it('Gets all the decks', () => {
@@ -44,20 +41,20 @@ describe('Decks router', () => {
     return request(app)
       .patch('/api/decks/7')
       .send(deck)
-      .expect(200)
+      .expect(204)
       .then((res) => {
         expect(res.body).to.be.a('object');
-        expect(res.body).to.deep.equal(deck);
+        expect(res.body).to.deep.equal({});
       });
   });
 
   it('Deletes a single deck', () => {
     return request(app)
       .delete('/api/decks/7')
-      .expect(200)
+      .expect(204)
       .then((res) => {
         expect(res.body).to.be.a('object');
-        expect(res.body).to.deep.equal({ deleted: true });
+        expect(res.body).to.deep.equal({});
       });
   });
 });
