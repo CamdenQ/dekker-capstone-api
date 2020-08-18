@@ -7,11 +7,8 @@ const cardsRouter = express.Router();
 
 cardsRouter.get('/', async (req, res, next) => {
   const { page } = req.query;
-  const { color } = req.body;
   try {
-    const cards = color
-      ? await CardsService.getCardsByColor(color)
-      : await CardsService.getAllCards(page);
+    const cards = await CardsService.getAllCards(page);
 
     if (!cards)
       return next({
