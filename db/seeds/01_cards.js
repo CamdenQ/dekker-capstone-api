@@ -1,4 +1,4 @@
-const cards = require('../../utils/cards');
+const cards = require('../../utils/cards-prod');
 
 exports.seed = function (knex) {
   return knex('cards')
