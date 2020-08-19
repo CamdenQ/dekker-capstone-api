@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "dropdb --if-exists decker-test && createdb decker-test && cross-env NODE_ENV=test mocha --require test/setup.js --exit"
+    "test": "dropdb --if-exists dekker-test && createdb dekker-test && cross-env NODE_ENV=test mocha --require test/setup.js --exit"
   },
   "keywords": [],
   "author": "",
