@@ -64,6 +64,7 @@ decksRouter.patch('/:id', async (req, res, next) => {
 
   try {
     const deck = await DecksService.update(id, req.body);
+    console.log(deck);
 
     if (!deck)
       return next({
@@ -71,7 +72,7 @@ decksRouter.patch('/:id', async (req, res, next) => {
         message: `Unable to update deck with id ${id}`,
       });
 
-    return res.status(204).json({});
+    return res.status(200).json(deck);
   } catch (error) {
     return next({ status: 500, message: error.message });
   }
@@ -89,7 +90,7 @@ decksRouter.delete('/:id', async (req, res, next) => {
         message: `Unable to find deck with id ${id}`,
       });
 
-    return res.status(204).json({});
+    return res.status(200).json(id);
   } catch (error) {
     return next({ status: 500, message: error.message });
   }
