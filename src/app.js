@@ -17,7 +17,13 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://dekker.app',
+  'https://dekker.app',
+  'http://dekker.vercel.app',
+  'https://dekker.vercel.app',
+];
 app.use(
   cors({
     origin: function (origin, callback) {
