@@ -1,5 +1,7 @@
 # DEKKER API for DEKKER: an MTG Deck Builder
 
+DEKKER app available at https://dekker.app
+
 ## API url
 
 [PLACEHOLDER]
